@@ -21,3 +21,21 @@ sorted x =  if  null x then True
             else if null (tail x) then True
             else if (head x) <= head (tail x) then sorted (tail x)
             else False
+
+
+mergesort :: [Int] -> [Int]
+
+
+
+split :: [Int] -> ([Int],[Int])
+
+
+merge :: ([Int],[Int]) -> [Int]
+
+
+
+
+
+
+
+

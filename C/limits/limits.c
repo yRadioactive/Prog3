@@ -9,14 +9,17 @@ int main(){
     printf("%d\n",b );
     long c = LONG_MAX;
     printf("%ld\n",c);
-    long long d = LONG_LONG_MAX;
+    long long d = LLONG_MAX;
     printf("%lld\n",d);
     char e = CHAR_MAX;
     printf("%d\n",e);
+    
+    
+    
     /*
         double g =__SIZEOF_DOUBLE__;
         printf("%lf\n",g);
-        float f = __SIZEOF_FLOAT__;
+        float f = __SIZEOF_FLOAT__;ü
         printf("%f\n",f);
     */
 

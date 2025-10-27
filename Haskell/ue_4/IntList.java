@@ -6,6 +6,3 @@ class Cons extends IntList{
 
 }
 
-public Empty {
-    
-}

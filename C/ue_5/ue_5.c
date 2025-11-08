@@ -1,6 +1,30 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+double bobsPlan(double etf[], double bit[], int len) {
+
+  double bitcoin_shares = 100000 / bit[0];
+  double etf_shares = 0.0;
+
+  for (int i = 0; i < len - 1; i++) {
+    if (bitcoin_shares * bit[i] > 100000) {
+      etf_shares = (bitcoin_shares * bit[i]) / etf[i];
+      printf("mehr als 100000\n");
+      return etf_shares * etf[len - 1];
+
+    }
+    if (bitcoin_shares * bit[i] < 50000) {
+      return bitcoin_shares * bit[i];
+    }
+  }
+}
+
+double AlicePlan(double etf[], double bit[], int len) {
+  double etf_shares = 50000 / etf[0];
+  double bitcoin_shares = 50000 / bit[0];
+  return ((etf_shares * etf[len - 1]) + (bitcoin_shares * bit[len - 1]));
+}
+
 int main() {
   double prices1[] = {35.38, 37.06, 35.83, 36.11, 37.26, 35.33, 37.8,  40.2,
                       34.56, 40.26, 41.4,  42.81, 44.91, 35.19, 41.67, 43.2,
@@ -15,25 +39,10 @@ int main() {
 
   int prices_len = 32;
 
+  double auszahlungBob = bobsPlan(prices1, prices2, prices_len);
+  double auszahlungAlice = AlicePlan(prices1, prices2, prices_len);
+
+  printf("Bob: %0.2f \nAlice: %0.2f", auszahlungBob, auszahlungAlice);
+
   return 0;
-}
-
-double bobsPlan(double etf[], double bit[], int len) {
-
-  double bitcoin_shares = 100000 * bit[0];
-  double etf_shares = 0.0;
-
-  for (int i = 0; len-1; i++) {
-    if (bitcoin_shares*bit[i]>100000) {
-      etf_shares = (bitcoin_shares*bit[i]);
-
-    }
-
-  }
-}
-
-double AlicePlan(double etf[], double bit[], int len) {
-  double etf_shares = 50000 / etf[0];
-  double bitcoin_shares = 50000 / bit[0];
-  return ((etf_shares * etf[len - 1]) + (bitcoin_shares * bit[len - 1]));
 }

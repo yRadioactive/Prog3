@@ -37,13 +37,16 @@ maennlich(hamelin).
 bruder(X,Y) :- maennlich(Y), mutter(X, M), mutter(Y, M),
 		   vater(X, V), vater(Y, V), X \== Y.
 
-onkel(X,Y) :- maennlich(Y),vater(X,V), bruder(V,Y).
+onkel(X,Y) :- maennlich(Y),(mutter(X, Z) ; vater(X, Z)), bruder(V,Y).
 
-tante(X,Y) :- weiblich(Y), mutter(X,M), schwester(M,Y).
+tante(X,Y) :- weiblich(Y), (mutter(X,M) ; vater(X,M)), schwester(M,Y).
 
 nichte(X,Y) :- weiblich(Y), mutter(Y,M), schwester(X,M).
+nichte(X, Y) :- weiblich(Y), bruder(X, B), vater(Y, B).
 
-schwaegerin(X,Y) :- ehefrau(X,G),schwester(G,Y).
+schwaegerin(X, Y) :- ehefrau(X, Z), schwester(Z, Y).
+schwaegerin(X, Y) :- ehefrau(Z, X), schwester(Z, Y).
+schwaegerin(X, Y) :- ehefrau(X, B), ehefrau(B, Y).
 
 schwester(X, Y) :- weiblich(Y),
 		   mutter(X, M), mutter(Y, M),

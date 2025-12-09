@@ -2,9 +2,9 @@
 % Aufruf mit: ?- phrase(satz(X), Wortliste).
 %! satz(-Satz)
 
-satz(X) --> np(S, nominativ,_), verb(V, transitiv), np(O, akkusativ,_), { X =.. [V, S, O] }.
-satz(X) --> np(S, nominativ,_), verb(V, transitiv), np(O, akkusativ,A), { X =.. [A ,V, S, O] }.
-satz(X) --> np(S, nominativ,_), verb(V, intransitiv), { X =.. [V, S] }.
+%satz(X) --> np(S, nominativ,_), verb(V, transitiv), np(O, akkusativ,_), { X =.. [V, S, O] }.
+satz(X) --> np(S, nominativ,_), vp(V, transitiv,AD), np(O, akkusativ,A), { X =.. [V, S,AD,A, O] }.
+satz(X) --> np(S, nominativ,_), vp(V, intransitiv,AD), { X =.. [V,S,AD] }.
 
 % DCG-Regel
 % NP = Nominalphrase
@@ -12,17 +12,38 @@ satz(X) --> np(S, nominativ,_), verb(V, intransitiv), { X =.. [V, S] }.
 
 np(X, _, _) --> name(X).
 np(X, F, _) --> artikel(G, F), subst(X, F, G).
-np(X, F, A) --> artikel(G, F), adjektiv(A, G), subst(X, F, G).
+np(X, F, A) --> artikel(G, F), adjektiv(A, G, F), subst(X, F, G).
+
+% DCG-Regel
+% VP = Verbphrase
+%! vp(-Verb, -Valenz,-Adverb)
+vp(V,VA,_) --> verb(V,VA).
+vp(V,VA,[A|Rest]) -->  verb(V,VA),advs([A|Rest]).
+
+
+advs([A|Rest]) --> adverb(A), advs(Rest).
+advs([]) --> [].
+
 
 
 % DCG-Regel
-%! adjektiv(-Adjektiv,  -Genus)
+%! adverb(-Adverb)
+adverb(nicht) --> [nicht].
+adverb(heute) --> [heute].
+adverb(gern) --> [gern].
 
-adjektiv(erste, f) --> [erste].
-adjektiv(letzte, f) --> [letzte].
+% DCG-Regel
+%! adjektiv(-Adjektiv, -Genus, -Fall)
 
-adjektiv(erster, m) --> [ersten].
-adjektiv(letzter, m) --> [letzten].
+adjektiv(erste, f,nominativ) --> [erste].
+adjektiv(letzte, f,nominativ) --> [letzte].
+adjektiv(erste, f,akkusativ) --> [erste].
+adjektiv(letzte, f,akkusativ) --> [letzte].
+
+adjektiv(erster, m,nominativ) --> [erster].
+adjektiv(letzter, m,nominativ) --> [letzter].
+adjektiv(erster, m,akkusativ) --> [ersten].
+adjektiv(letzter, m, akkusativ) --> [letzten].
 
 % DCG-Regel
 %! name(-Name)

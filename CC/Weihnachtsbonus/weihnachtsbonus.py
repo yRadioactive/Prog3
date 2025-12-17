@@ -1,6 +1,6 @@
 import boto3
 
-
+#insert keys here
 
 client = boto3.client('sqs',region_name="us-east-1",aws_access_key_id = aws_access_key_id ,aws_secret_access_key = aws_secret_access_key,aws_session_token = aws_session_token)
 
